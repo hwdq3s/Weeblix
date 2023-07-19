@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Lessons</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+    }
+    
+    .book {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header {
+      background-color: #f0f0f0;
+      padding: 10px;
+      text-align: center;
+    }
+    
+    .box {
+      width: 100%;
+      background-color: #fff;
+      overflow: auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .page {
+      display: none;
+    }
+    
+    .page.active {
+      display: block;
+    }
+    
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    
+    .button:hover {
+      background-color: #333;
+    }
+    
+    .back-button {
+      float: left;
+      margin-right: 10px;
+    }
+    
+    .next-button {
+      float: right;
+      margin-left: 10px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .home-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border-radius: 5px;
+    }
+  </style>
+  <script>
+    var currentPage = 0;
+    var totalPages = 0;
+    
+    function initializeBook() {
+      var pages = document.getElementsByClassName('page');
+      totalPages = pages.length;
+      
+      if (totalPages > 0) {
+        pages[currentPage].classList.add('active');
+      }
+      
+      updateButtonVisibility();
+    }
+    
+    function switchPage(direction) {
+      var pages = document.getElementsByClassName('page');
+      
+      if (direction === 'back' && currentPage > 0) {
+        pages[currentPage].classList.remove('active');
+        currentPage--;
+        pages[currentPage].classList.add('active');
+      } else if (direction === 'next' && currentPage < totalPages - 1) {
+        pages[currentPage].classList.remove('active');
+        currentPage++;
+        pages[currentPage].classList.add('active');
+      }
+      
+      updateButtonVisibility();
+    }
+    
+    function goHome() {
+      window.location.href = 'home.html';
+    }
+    
+    function updateButtonVisibility() {
+      var backButton = document.getElementById('backButton');
+      var nextButton = document.getElementById('nextButton');
+      
+      if (currentPage === 0) {
+        backButton.classList.add('hidden');
+      } else {
+        backButton.classList.remove('hidden');
+      }
+      
+      if (currentPage === totalPages - 1) {
+        nextButton.classList.add('hidden');
+      } else {
+        nextButton.classList.remove('hidden');
+      }
+    }
+  </script>
+</head>
+<body onload="initializeBook()">
+  <div class="book">
+    <div class="header">
+      <h2>JavaScript Lessons</h2>
+    </div>
+    <button class="button home-button" onclick="goHome()">Home</button>
+    <div class="box">
+      <div class="page">
+        <h2>Lesson 1: Introduction to JavaScript</h2>
+        <p>JavaScript is a versatile programming language used for adding interactivity and dynamic behavior to websites.</p>
+        <pre>
+          &lt;script&gt;
+            console.log('Hello, world!');
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 2: Variables</h2>
+        <p>Learn about variables and how to declare and assign values to them.</p>
+        <pre>
+          &lt;script&gt;
+            var name = 'John';
+            var age = 30;
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 3: Data Types</h2>
+        <p>Explore different data types in JavaScript such as strings, numbers, booleans, arrays, objects, and more.</p>
+        <pre>
+          &lt;script&gt;
+            var name = 'John'; // string
+            var age = 30; // number
+            var isStudent = true; // boolean
+            var fruits = ['apple', 'banana', 'orange']; // array
+            var person = { name: 'John', age: 30 }; // object
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 4: Operators</h2>
+        <p>Learn about arithmetic, comparison, logical, and assignment operators in JavaScript.</p>
+        <pre>
+          &lt;script&gt;
+            var x = 10;
+            var y = 5;
+            
+            var sum = x + y;
+            var isGreater = x > y;
+            var logicalAnd = x > 0 && y < 10;
+            
+            var result = (x > y) ? 'x is greater' : 'y is greater';
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 5: Conditional Statements</h2>
+        <p>Use if...else and switch statements to make decisions in JavaScript.</p>
+        <pre>
+          &lt;script&gt;
+            var age = 30;
+            
+            if (age &gt;= 18) {
+              console.log('You are an adult.');
+            } else {
+              console.log('You are a minor.');
+            }
+            
+            var day = 'Monday';
+            
+            switch (day) {
+              case 'Monday':
+                console.log('Today is Monday.');
+                break;
+              case 'Tuesday':
+                console.log('Today is Tuesday.');
+                break;
+              default:
+                console.log('Today is another day.');
+            }
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 6: Loops</h2>
+        <p>Use loops to repeat blocks of code in JavaScript.</p>
+        <pre>
+          &lt;script&gt;
+            // For loop
+            for (var i = 0; i &lt; 5; i++) {
+              console.log(i);
+            }
+            
+            // While loop
+            var count = 0;
+            while (count &lt; 5) {
+              console.log(count);
+              count++;
+            }
+            
+            // Do-while loop
+            var num = 0;
+            do {
+              console.log(num);
+              num++;
+            } while (num &lt; 5);
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 7: Functions</h2>
+        <p>Learn how to define and call functions in JavaScript.</p>
+        <pre>
+          &lt;script&gt;
+            function greet(name) {
+              return 'Hello, ' + name + '!';
+            }
+            
+            var message = greet('John');
+            console.log(message); // Output: 'Hello, John!'
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 8: Arrays</h2>
+        <p>Work with arrays and perform common array operations.</p>
+        <pre>
+          &lt;script&gt;
+            var fruits = ['apple', 'banana', 'orange'];
+            console.log(fruits[0]); // Output: 'apple'
+            console.log(fruits.length); // Output: 3
+            
+            fruits.push('grape');
+            console.log(fruits); // Output: ['apple', 'banana', 'orange', 'grape']
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 9: Objects</h2>
+        <p>Understand objects and their properties and methods.</p>
+        <pre>
+          &lt;script&gt;
+            var person = {
+              name: 'John',
+              age: 30,
+              greet: function() {
+                console.log('Hello, my name is ' + this.name + '.');
+              }
+            };
+            
+            console.log(person.name); // Output: 'John'
+            person.greet(); // Output: 'Hello, my name is John.'
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 10: Scope</h2>
+        <p>Learn about variable scope in JavaScript.</p>
+        <pre>
+          &lt;script&gt;
+            var x = 10;
+            
+            function foo() {
+              var y = 20;
+              console.log(x); // Output: 10
+              console.log(y); // Output: 20
+            }
+            
+            foo();
+            console.log(x); // Output: 10
+            console.log(y); // Error: y is not defined
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 11: Objects Constructors</h2>
+        <p>Use constructor functions to create objects.</p>
+        <pre>
+          &lt;script&gt;
+            function Person(name, age) {
+              this.name = name;
+              this.age = age;
+            }
+            
+            var john = new Person('John', 30);
+            console.log(john.name); // Output: 'John'
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 12: Closures</h2>
+        <p>Understand closures and their use cases.</p>
+        <pre>
+          &lt;script&gt;
+            function outer() {
+              var x = 10;
+              
+              function inner() {
+                console.log(x);
+              }
+              
+              return inner;
+            }
+            
+            var closureFn = outer();
+            closureFn(); // Output: 10
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 13: DOM Manipulation</h2>
+        <p>Learn how to interact with the Document Object Model (DOM) to modify HTML elements.</p>
+        <pre>
+          &lt;!-- HTML -->
+          &lt;div id="output"&gt;Initial content&lt;/div&gt;
+
+          &lt;!-- JavaScript -->
+          &lt;script&gt;
+            var outputElement = document.getElementById('output');
+            outputElement.innerHTML = 'Updated content';
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 14: Events</h2>
+        <p>Handle events in JavaScript to respond to user interactions.</p>
+        <pre>
+          &lt;!-- HTML -->
+          &lt;button id="myButton"&gt;Click me&lt;/button&gt;
+
+          &lt;!-- JavaScript -->
+          &lt;script&gt;
+            var button = document.getElementById('myButton');
+            button.addEventListener('click', function() {
+              alert('Button clicked!');
+            });
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 15: Form Handling</h2>
+        <p>Work with form elements and handle form submission in JavaScript.</p>
+        <pre>
+          &lt;!-- HTML -->
+          &lt;form id="myForm"&gt;
+            &lt;input type="text" name="username" id="usernameInput"&gt;
+            &lt;button type="submit"&gt;Submit&lt;/button&gt;
+          &lt;/form&gt;
+
+          &lt;!-- JavaScript -->
+          &lt;script&gt;
+            var form = document.getElementById('myForm');
+            form.addEventListener('submit', function(event) {
+              event.preventDefault();
+              var username = document.getElementById('usernameInput').value;
+              alert('Hello, ' + username + '!');
+            });
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 16: Promises</h2>
+        <p>Use promises for asynchronous programming and handling asynchronous tasks.</p>
+        <pre>
+          &lt;script&gt;
+            function fetchData() {
+              return new Promise(function(resolve, reject) {
+                // Simulate fetching data from server
+                setTimeout(function() {
+                  var data = 'Data received from server';
+                  resolve(data);
+                }, 2000);
+              });
+            }
+            
+            fetchData().then(function(result) {
+              console.log(result); // Output: 'Data received from server'
+            });
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 17: Fetch API</h2>
+        <p>Learn how to make HTTP requests using the Fetch API.</p>
+        <pre>
+          &lt;script&gt;
+            fetch('https://api.example.com/data')
+              .then(response =&gt; response.json())
+              .then(data =&gt; console.log(data))
+              .catch(error =&gt; console.error(error));
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 18: Async/Await</h2>
+        <p>Use async/await for more concise and readable asynchronous code.</p>
+        &lt;script&gt;
+        async function fetchData() {
+          try {
+            var response = await fetch('https://api.example.com/data');
+            var data = await response.json();
+            console.log(data);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+        fetchData();
+        &lt;/script&gt;
+      </div>
+
+      <div class="page">
+        <h2>Lesson 19: Modules</h2>
+        <p>Organize and modularize your JavaScript code using ES modules.</p>
+        <pre>
+          &lt;!-- module1.js -->
+          &lt;script type="module" src="module1.js"&gt;&lt;/script&gt;
+
+          &lt;!-- module2.js -->
+          &lt;script type="module" src="module2.js"&gt;&lt;/script&gt;
+
+          &lt;!-- main.js -->
+          &lt;script type="module"&gt;
+            import { greet } from './module1.js';
+            import { sum } from './module2.js';
+
+            console.log(greet('John')); // Output: 'Hello, John!'
+            console.log(sum(2, 3)); // Output: 5
+          &lt;/script&gt;
+        </pre>
+      </div>
+
+      <div class="page">
+        <h2>Lesson 20: Error Handling</h2>
+        <p>Handle errors and exceptions in JavaScript.</p>
+        <pre>
+          &lt;script&gt;
+            try {
+              // Code that may throw an error
+              var result = 10 / 0;
+              console.log(result); // This line won't be executed
+            } catch (error) {
+              console.error('Error:', error.message);
+            }
+          &lt;/script&gt;
+        </pre>
+      </div>
+    </div>
+    <div class="book-controls">
+      <button id="backButton" class="button back-button" onclick="switchPage('back')">Back</button>
+      <button id="nextButton" class="button next-button" onclick="switchPage('next')">Next</button>
+    </div>
+  </div>
+</body>
+</html>
