@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Learn HTML</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    
+    .book {
+      width: 100%;
+      max-width: 400px;
+      background-color: #fff;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    .box {
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    
+    .page {
+      display: none;
+    }
+    
+    .page.active {
+      display: block;
+    }
+    
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 14px;
+      text-decoration: none;
+    }
+    
+    .button:hover {
+      background-color: #555;
+    }
+    
+    .back-button {
+      margin-right: 10px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .hidden-button {
+      display: none;
+    }
+    
+    .home-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    
+    .book-controls {
+      text-align: center;
+    }
+    
+    @media (min-width: 576px) {
+      .book {
+        max-width: 600px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .book {
+        max-width: 800px;
+      }
+    }
+  </style>
+  <script>
+    var currentPage = 0;
+    var totalPages = 0;
+    
+    function initializeBook() {
+      var pages = document.getElementsByClassName('page');
+      totalPages = pages.length;
+      
+      if (totalPages > 0) {
+        pages[currentPage].classList.add('active');
+      }
+      
+      updateButtonVisibility();
+    }
+    
+    function switchPage(direction) {
+      var pages = document.getElementsByClassName('page');
+      
+      if (direction === 'back' && currentPage > 0) {
+        pages[currentPage].classList.remove('active');
+        currentPage--;
+        pages[currentPage].classList.add('active');
+      } else if (direction === 'next' && currentPage < totalPages - 1) {
+        pages[currentPage].classList.remove('active');
+        currentPage++;
+        pages[currentPage].classList.add('active');
+      }
+      
+      updateButtonVisibility();
+    }
+    
+    function goHome() {
+      window.location.href = 'home.html';
+    }
+    
+    function updateButtonVisibility() {
+      var backButton = document.getElementById('backButton');
+      var nextButton = document.getElementById('nextButton');
+      
+      if (currentPage === 0) {
+        backButton.classList.add('hidden-button');
+        nextButton.classList.remove('hidden-button');
+      } else if (currentPage === totalPages - 1) {
+        backButton.classList.remove('hidden-button');
+        nextButton.classList.add('hidden-button');
+      } else {
+        backButton.classList.remove('hidden-button');
+        nextButton.classList.remove('hidden-button');
+      }
+    }
+  </script>
+</head>
+<body onload="initializeBook()">
+  <div class="book">
+    <button class="button home-button" onclick="goHome()">Home</button>
+    <div class="header">
+      <h2>HTML Lessons</h2>
+    </div>
+    <div class="box">
+      <div class="page">
+        <h2>Lesson 1: Introduction to HTML</h2>
+        <p>To create an HTML document, start with the following structure:</p>
+        <pre>
+          &lt;!DOCTYPE html&gt;
+          &lt;html&gt;
+          &lt;head&gt;
+            &lt;title&gt;My First HTML Page&lt;/title&gt;
+          &lt;/head&gt;
+          &lt;body&gt;
+            &lt;h1&gt;Hello, World!&lt;/h1&gt;
+          &lt;/body&gt;
+          &lt;/html&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 2: Working with HTML Tags</h2>
+        <p>HTML tags allow you to structure and format your content. Here's an example:</p>
+        <pre>
+          &lt;h2&gt;Heading 2&lt;/h2&gt;
+          &lt;p&gt;This is a paragraph.&lt;/p&gt;
+          &lt;a href="https://example.com"&gt;Link&lt;/a&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 3: Adding Images</h2>
+        <p>You can add images to your HTML page using the `<img>` tag:</p>
+        <pre>
+          &lt;img src="image.jpg" alt="Description of the image"&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 4: Creating Lists</h2>
+        <p>Lists can be created using the `<ul>`, `<ol>`, and `<li>` tags:</p>
+        <pre>
+          &lt;ul&gt;
+            &lt;li&gt;Item 1&lt;/li&gt;
+            &lt;li&gt;Item 2&lt;/li&gt;
+            &lt;li&gt;Item 3&lt;/li&gt;
+          &lt;/ul&gt;
+          
+          &lt;ol&gt;
+            &lt;li&gt;Item 1&lt;/li&gt;
+            &lt;li&gt;Item 2&lt;/li&gt;
+            &lt;li&gt;Item 3&lt;/li&gt;
+          &lt;/ol&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 5: Formatting Text</h2>
+        <p>You can format your text using various HTML tags:</p>
+        <pre>
+          &lt;em&gt;italicized text&lt;/em&gt;
+          &lt;strong&gt;bold text&lt;/strong&gt;
+          &lt;u&gt;underlined text&lt;/u&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 6: Working with Links</h2>
+        <p>You can create clickable links using the `<a>` tag:</p>
+        <pre>
+          &lt;a href="https://example.com"&gt;Visit Example.com&lt;/a&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 7: Adding CSS Styles</h2>
+        <p>You can apply CSS styles to your HTML elements using inline styles or external style sheets:</p>
+        <pre>
+          &lt;p style="color: red;"&gt;This paragraph has a red color.&lt;/p&gt;
+          
+          &lt;link rel="stylesheet" href="styles.css"&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 8: Inline Styles vs. External Stylesheets</h2>
+        <p>Comparing inline styles and external stylesheets for CSS styling:</p>
+        <pre>
+          &lt;p style="color: red;"&gt;This paragraph has a red color.&lt;/p&gt;
+          
+          &lt;link rel="stylesheet" href="styles.css"&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 9: Working with CSS Selectors</h2>
+        <p>Using CSS selectors to target and style specific HTML elements:</p>
+        <pre>
+          h1 {
+            color: blue;
+            font-size: 24px;
+          }
+          
+          .my-class {
+            background-color: yellow;
+          }
+          
+          #my-id {
+            border: 1px solid black;
+          }
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 10: CSS Box Model</h2>
+        <p>Understanding the CSS box model for element layout and spacing:</p>
+        <pre>
+          .box {
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            border: 1px solid black;
+            margin: 10px;
+          }
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 11: Responsive Web Design</h2>
+        <p>Creating websites that adapt to different screen sizes and devices:</p>
+        <pre>
+          @media screen and (max-width: 768px) {
+            /* CSS rules for mobile devices */
+          }
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 12: Introduction to JavaScript</h2>
+        <p>Adding interactivity and dynamic functionality to your website:</p>
+        <pre>
+          &lt;script src="script.js"&gt;&lt;/script&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 13: Variables and Data Types in JavaScript</h2>
+        <p>Working with variables and different data types in JavaScript:</p>
+        <pre>
+          var name = 'John';
+          var age = 25;
+          var isStudent = true;
+          var grades = [90, 85, 95];
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 14: JavaScript Functions</h2>
+        <p>Defining and using functions to organize and reuse code:</p>
+        <pre>
+          function sayHello() {
+            console.log('Hello, world!');
+          }
+          
+          sayHello();
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 15: Conditional Statements in JavaScript</h2>
+        <p>Using if statements and switch statements to make decisions:</p>
+        <pre>
+          if (condition) {
+            // Code to execute if condition is true
+          } else {
+            // Code to execute if condition is false
+          }
+          
+          switch (variable) {
+            case value1:
+              // Code to execute if variable matches value1
+              break;
+            case value2:
+              // Code to execute if variable matches value2
+              break;
+            default:
+              // Code to execute if variable matches none of the values
+              break;
+          }
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 16: Loops in JavaScript</h2>
+        <p>Using loops to iterate over arrays or repeat code blocks:</p>
+        <pre>
+          for (var i = 0; i < 5; i++) {
+            console.log(i);
+          }
+          
+          while (condition) {
+            // Code to execute as long as condition is true
+          }
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 17: Document Object Model (DOM)</h2>
+        <p>Manipulating HTML elements using JavaScript and the DOM:</p>
+        <pre>
+          document.getElementById('myElement').innerHTML = 'New content';
+          
+          var elements = document.getElementsByClassName('myClass');
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 18: Introduction to APIs</h2>
+        <p>Working with APIs to retrieve and use data from external sources:</p>
+        <pre>
+          fetch('https://api.example.com/data')
+            .then(function(response) {
+              return response.json();
+            })
+            .then(function(data) {
+              console.log(data);
+            });
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 19: Introduction to JSON</h2>
+        <p>Using JSON (JavaScript Object Notation) for data interchange:</p>
+        <pre>
+          {
+            "name": "John",
+            "age": 25,
+            "isStudent": true,
+            "grades": [90, 85, 95]
+          }
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 20: Introduction to AJAX</h2>
+        <p>Asynchronous JavaScript and XML (AJAX) for making server requests:</p>
+        <pre>
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', 'data.json', true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              var data = JSON.parse(xhr.responseText);
+              console.log(data);
+            }
+          };
+          xhr.send();
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 21: Form Handling in HTML</h2>
+        <p>Working with HTML forms and handling user input:</p>
+        <pre>
+          &lt;form&gt;
+            &lt;input type="text" name="username"&gt;
+            &lt;input type="password" name="password"&gt;
+            &lt;input type="submit" value="Submit"&gt;
+          &lt;/form&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 22: Introduction to Bootstrap</h2>
+        <p>Using the Bootstrap framework for responsive web design and UI components:</p>
+        <pre>
+          &lt;link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"&gt;
+          
+          &lt;div class="container"&gt;
+            &lt;h1&gt;Hello, world!&lt;/h1&gt;
+          &lt;/div&gt;
+          
+          &lt;script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"&gt;&lt;/script&gt;
+        </pre>
+      </div>
+      
+      <div class="page">
+        <h2>Lesson 23: Deploying a Website</h2>
+        <p>Deploying your website to a web server or hosting platform:</p>
+        <pre>
+          $ scp index.html user@example.com:/var/www/html
+        </pre>
+      </div>
+      
+      <!-- Add more lessons... -->
+      
+    </div>
+    <div class="book-controls">
+      <button id="backButton" class="button back-button hidden-button" onclick="switchPage('back')">Back</button>
+      <button id="nextButton" class="button" onclick="switchPage('next')">Next</button>
+    </div>
+  </div>
+</body>
+</html>
