@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home | Weeblix</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: black;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .header-title {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .project-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .project-list li {
+            cursor: pointer;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .project-list li:hover {
+            background-color: #f9f9f9;
+        }
+
+        .code-editor {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .code-area {
+            width: 100%;
+            height: 300px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .btn {
+            background-color: grey;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+
+        .btn.dark-mode {
+            background-color: black;
+        }
+
+        .btn:hover {
+            background-color: #555;
+        }
+
+        .result {
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .options-btn {
+            background-color: black;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            border-radius: 3px;
+            margin-bottom: 10px;
+        }
+
+        .options-btn:hover {
+            background-color: #555;
+        }
+
+        /* New styles for the dark mode */
+        body.dark-mode {
+            background-color: #303030;
+            color: #fff;
+        }
+
+        .header.dark-mode {
+            background-color: #303030;
+        }
+
+        .header.dark-mode .header-title {
+            color: #fff; /* Change header title color to white */
+        }
+
+        .dashboard.dark-mode {
+            background-color: #1f1f1f;
+        }
+
+        .code-editor.dark-mode {
+            background-color: #1f1f1f;
+        }
+
+        .result.dark-mode {
+            background-color: #252525;
+        }
+
+        .languageOptions {
+            display: none;
+        }
+
+        .languageOptions.active {
+            display: block;
+        }
+
+        .learning-hub {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #000; /* Added color for dark mode compatibility */
+        }
+
+        .learning-hub h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .learning-hub .button-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .learning-hub .button-container .btn {
+            margin: 0 10px;
+        }
+
+        .box {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #000; /* Added color for dark mode compatibility */
+        }
+
+        /* Additional styles for dark mode */
+        .box.dark-mode {
+            background-color: #1f1f1f;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">
+            <h1>Online Web Compiler</h1>
+        </div>
+        <button onclick="toggleDarkMode()" class="options-btn btn">Dark Mode</button>
+    </div>
+
+    <div class="container">
+        <!-- Home Screen -->
+        <div id="homeScreen">
+            <div class="dashboard">
+                <h2>Dashboard</h2>
+                <button onclick="createProject()" class="btn">Create New Project</button>
+                <ul id="projectList" class="project-list">
+                    <!-- Project list will be populated dynamically -->
+                </ul>
+            </div>
+
+            <!-- New Box -->
+            <div class="box">
+                <div class="learning-hub">
+                    <h2>Learning Hub</h2>
+                    <div class="button-container">
+                        <button onclick="location.href='learnjavascript.html'" class="btn">JavaScript</button>
+                        <button onclick="location.href='learnhtml.html'" class="btn">HTML</button>
+                        <button onclick="location.href='learnpython.html'" class="btn">Python</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Editor -->
+        <div id="codeEditor" style="display: none;">
+            <div class="dashboard">
+                <h2>Code Editor</h2>
+                <button onclick="showLanguageOptions()" class="options-btn">Select Language</button>
+                <div id="languageOptions" class="languageOptions">
+                    <button onclick="selectLanguage('JavaScript')" class="btn">JavaScript</button>
+                    <button onclick="selectLanguage('HTML')" class="btn">HTML</button>
+                    <button onclick="selectLanguage('Python')" class="btn">Python</button>
+                </div>
+                <textarea id="codeArea" class="code-area"></textarea>
+                <button onclick="runCode()" class="btn">Run</button>
+                <button onclick="saveCode()" class="btn">Save</button>
+                <button onclick="exitProject()" class="btn">Exit</button>
+            </div>
+            <div id="resultArea" class="result">
+                <!-- Result will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Array to store projects
+        var projects = [];
+        var activeProject = null;
+        var selectedLanguage = '';
+
+        // Load projects from localStorage on page load
+        loadProjects();
+
+        function loadProjects() {
+            var savedProjects = localStorage.getItem('projects');
+            if (savedProjects) {
+                projects = JSON.parse(savedProjects);
+                updateProjectList();
+            }
+        }
+
+        function saveProjects() {
+            localStorage.setItem('projects', JSON.stringify(projects));
+        }
+
+        function createProject() {
+            var projectName = prompt('Enter project name:');
+            if (projectName) {
+                var project = { name: projectName, code: '' };
+                projects.push(project);
+                updateProjectList();
+                saveProjects(); // Save projects after adding a new project
+            }
+        }
+
+        function updateProjectList() {
+            var projectList = document.getElementById('projectList');
+            projectList.innerHTML = '';
+            for (var i = 0; i < projects.length; i++) {
+                var projectItem = document.createElement('li');
+                projectItem.textContent = projects[i].name;
+                projectItem.onclick = (function(project) {
+                    return function() {
+                        showProjectOptions(project);
+                    };
+                })(projects[i]);
+                projectList.appendChild(projectItem);
+            }
+        }
+
+        function showProjectOptions(project) {
+            var options = ['Open Project', 'Rename Project', 'Delete Project'];
+            var optionStr = options.join('\n');
+            var userInput = prompt('Select an option:\n' + optionStr);
+
+            switch (userInput) {
+                case 'Open Project':
+                    openProject(project);
+                    break;
+                case 'Rename Project':
+                    renameProject(project);
+                    break;
+                case 'Delete Project':
+                    deleteProject(project);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        function openProject(project) {
+            showCodeEditor(project);
+        }
+
+        function renameProject(project) {
+            var newProjectName = prompt('Enter new project name:', project.name);
+            if (newProjectName) {
+                project.name = newProjectName;
+                updateProjectList();
+                saveProjects(); // Save projects after renaming
+            }
+        }
+
+        function deleteProject(project) {
+            if (confirm('Are you sure you want to delete the project "' + project.name + '"?')) {
+                var projectIndex = projects.indexOf(project);
+                if (projectIndex !== -1) {
+                    projects.splice(projectIndex, 1);
+                    updateProjectList();
+                    saveProjects(); // Save projects after deleting
+                    if (activeProject === project) {
+                        exitProject(); // Exit the project if it was active
+                    }
+                }
+            }
+        }
+
+        function showCodeEditor(project) {
+            document.getElementById('homeScreen').style.display = 'none';
+            document.getElementById('codeEditor').style.display = 'block';
+            document.getElementById('codeArea').value = project.code;
+            clearResult();
+            activeProject = project;
+        }
+
+        function showLanguageOptions() {
+            var languageOptions = document.getElementById('languageOptions');
+            languageOptions.classList.add('active');
+        }
+
+        function selectLanguage(language) {
+            selectedLanguage = language;
+            alert('Selected language: ' + selectedLanguage);
+            var languageOptions = document.getElementById('languageOptions');
+            languageOptions.classList.remove('active');
+        }
+
+        function runCode() {
+            var code = document.getElementById('codeArea').value;
+            var resultArea = document.getElementById('resultArea');
+            resultArea.textContent = ''; // Clear previous results
+
+            // Execute the code using the selected language
+            switch (selectedLanguage) {
+                case 'JavaScript':
+                    try {
+                        var result = eval(code);
+                        resultArea.textContent = result;
+                    } catch (error) {
+                        resultArea.textContent = 'Error: ' + error.message;
+                    }
+                    break;
+                case 'Python':
+                    // Implement code execution logic for Python
+                    // Replace the alert with your code execution logic or API call
+                    resultArea.textContent = 'Code execution not supported for Python.';
+                    break;
+                case 'HTML':
+                    // Implement code execution logic for HTML
+                    // Replace the alert with your code execution logic or API call
+                    resultArea.innerHTML = code;
+                    break;
+                default:
+                    resultArea.textContent = 'Code execution not supported for this language.';
+                    break;
+            }
+        }
+
+        function saveCode() {
+            var code = document.getElementById('codeArea').value;
+            if (activeProject) {
+                activeProject.code = code;
+                saveProjects(); // Save projects after modifying code
+                alert('Code saved successfully!');
+            }
+        }
+
+        function exitProject() {
+            activeProject = null;
+            document.getElementById('homeScreen').style.display = 'block';
+            document.getElementById('codeEditor').style.display = 'none';
+            clearResult();
+        }
+
+        function clearResult() {
+            var resultArea = document.getElementById('resultArea');
+            resultArea.textContent = '';
+        }
+
+        // Toggle Dark Mode
+        function toggleDarkMode() {
+            var body = document.body;
+            var elements = document.querySelectorAll('.header, .dashboard, .code-editor, .result');
+            var darkModeBtn = document.querySelector('.btn');
+
+            body.classList.toggle('dark-mode');
+            elements.forEach(function(element) {
+                element.classList.toggle('dark-mode');
+            });
+
+            darkModeBtn.classList.toggle('dark-mode');
+            darkModeBtn.textContent = body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+
+            // Update learning hub styles for dark mode compatibility
+            var learningHub = document.querySelector('.learning-hub');
+            learningHub.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                learningHub.style.color = '#fff';
+            } else {
+                learningHub.style.color = '#000';
+            }
+
+            // Update new box styles for dark mode compatibility
+            var newBox = document.querySelector('.box');
+            newBox.classList.toggle('dark-mode');
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+</body>
+</html>
